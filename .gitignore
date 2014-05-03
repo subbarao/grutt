@@ -1,0 +1,10 @@
+node_modules
+
+ti/Resources
+ti/app
+ti/build
+ti/build.log
+ti/tmp
+ti/spec
+._*
+.DS_Store
