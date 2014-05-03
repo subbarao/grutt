@@ -5,6 +5,7 @@ module.exports = (grunt) ->
 
   grunt.initConfig
     pkg: grunt.file.readJSON 'package.json'
+    name: 'titanium-app'
 
     coffee:
       options:
@@ -12,9 +13,9 @@ module.exports = (grunt) ->
       alloyctrls:
         files: [
           expand: true
-          cwd: 'ti/src/lib'
+          cwd: '<%= name %>/src/lib'
           src: [ '**/*.coffee' ]
-          dest: 'ti/app/lib'
+          dest: '<%= name %>/app/lib'
           ext: '.js'
         ]
         options:
@@ -22,9 +23,9 @@ module.exports = (grunt) ->
       alloylib:
         files: [
           expand: true
-          cwd: 'ti/src/controllers'
+          cwd: '<%= name %>/src/controllers'
           src: [ '**/*.coffee' ]
-          dest: 'ti/app/controllers'
+          dest: '<%= name %>/app/controllers'
           ext: '.js'
         ]
         options:
@@ -32,9 +33,9 @@ module.exports = (grunt) ->
       test:
         files: [
           expand: true
-          cwd: 'ti/tests/'
+          cwd: '<%= name %>/tests/'
           src: [ '**/*.coffee' ]
-          dest: 'ti/spec/'
+          dest: '<%= name %>/spec/'
           ext: '.js'
         ]
         options:
@@ -44,9 +45,9 @@ module.exports = (grunt) ->
       alloy:
         files: [
           expand: true
-          cwd: 'ti/src/'
+          cwd: '<%= name %>/src/'
           src: [ '**/*.jade' ]
-          dest: 'ti/app/'
+          dest: '<%= name %>/app/'
           ext: '.xml'
         ]
 
@@ -54,9 +55,9 @@ module.exports = (grunt) ->
       alloy:
         files: [
           expand: true
-          cwd: 'ti/src/'
+          cwd: '<%= name %>/src/'
           src: [ '**/*.ltss' ]
-          dest: 'ti/app/'
+          dest: '<%= name %>/app/'
           ext: '.tss'
         ]
 
@@ -65,8 +66,8 @@ module.exports = (grunt) ->
         files: [
           expand: true
           dot: true
-          cwd: 'ti/src/'
-          dest: 'ti/app/'
+          cwd: '<%= name %>/src/'
+          dest: '<%= name %>/app/'
           src: [
             '**'
             '!**/*.coffee'
@@ -77,7 +78,7 @@ module.exports = (grunt) ->
 
     tishadow:
       options:
-        projectDir: 'ti/'
+        projectDir: '<%= name %>/'
         update: true
         withAlloy: true
       run:
@@ -100,21 +101,21 @@ module.exports = (grunt) ->
       options:
         spawn: false
       alloy:
-        files: [ 'ti/src/**/*' ]
+        files: [ '<%= name %>/src/**/*' ]
         tasks: [
           'build:ti'
           'tishadow:run'
         ]
       test:
-        files: [ 'ti/src/**/*', 'ti/tests/**/*' ]
+        files: [ '<%= name %>/src/**/*', '<%= name %>/tests/**/*' ]
         tasks: [ 'execute:test' ]
 
     clean:
       ti: [
-        'ti/Resources/'
-        'ti/app/'
-        'ti/build/'
-        'ti/spec/'
+        '<%= name %>/Resources/'
+        '<%= name %>/app/'
+        '<%= name %>/build/'
+        '<%= name %>/spec/'
       ]
 
 

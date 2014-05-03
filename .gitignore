@@ -1,10 +1,10 @@
 node_modules
 
-ti/Resources
-ti/app
-ti/build
-ti/build.log
-ti/tmp
-ti/spec
+titanium-app/Resources
+titanium-app/app
+titanium-app/build
+titanium-app/build.log
+titanium-app/tmp
+titanium-app/spec
 ._*
 .DS_Store
