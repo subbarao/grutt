@@ -1,24 +1,34 @@
-
 module.exports = (grunt) ->
   for key of grunt.file.readJSON('package.json').devDependencies
     if key isnt 'grunt' and key.indexOf('grunt') is 0
       grunt.loadNpmTasks key
-  
+
   grunt.initConfig
     pkg: grunt.file.readJSON 'package.json'
 
     coffee:
       options:
-        bare: true
         sourceMap: true
-      alloy:
+      alloyctrls:
         files: [
           expand: true
-          cwd: 'ti/src/'
+          cwd: 'ti/src/lib'
           src: [ '**/*.coffee' ]
-          dest: 'ti/app/'
+          dest: 'ti/app/lib'
           ext: '.js'
         ]
+        options:
+          bare: true
+      alloylib:
+        files: [
+          expand: true
+          cwd: 'ti/src/controllers'
+          src: [ '**/*.coffee' ]
+          dest: 'ti/app/controllers'
+          ext: '.js'
+        ]
+        options:
+          bare: false
       test:
         files: [
           expand: true
@@ -27,6 +37,8 @@ module.exports = (grunt) ->
           dest: 'ti/spec/'
           ext: '.js'
         ]
+        options:
+          bare: false
 
     jade:
       alloy:
@@ -85,16 +97,19 @@ module.exports = (grunt) ->
             platform: [ 'ios' ]
 
     watch:
+      options:
+        spawn: false
       alloy:
         files: [ 'ti/src/**/*' ]
         tasks: [
           'build:ti'
           'tishadow:run'
         ]
-        options:
-          spawn: false
+      test:
+        files: [ 'ti/src/**/*', 'ti/tests/**/*' ]
+        tasks: [ 'execute:test' ]
 
-    clean: 
+    clean:
       ti: [
         'ti/Resources/'
         'ti/app/'
@@ -112,10 +127,18 @@ module.exports = (grunt) ->
   ]
 
   grunt.registerTask 'build:ti', [
-    'coffee:alloy'
+    'coffee:alloyctrls'
+    'coffee:alloylib'
     'jade:alloy'
     'ltss:alloy'
     'copy:alloy'
+  ]
+  grunt.registerTask 'execute:test', [
+    'tishadow:clear'
+    'clean'
+    'build:ti'
+    'coffee:test'
+    'tishadow:test'
   ]
 
   grunt.registerTask 'dev', [
@@ -125,9 +148,6 @@ module.exports = (grunt) ->
   ]
 
   grunt.registerTask 'test', [
-    'tishadow:clear'
-    'clean'
-    'build:ti'
-    'coffee:test'
-    'tishadow:test'
+    'execute:test'
+    'watch:test'
   ]

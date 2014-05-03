@@ -23,7 +23,7 @@ This project uses alloy framework with grunt so usually where you have to manage
   * **src** - alloy source folder
   * **spec** - test spec dist folder
   * **tests** - test spec source folder
-  
+
 
 ## Usage
 
@@ -35,7 +35,7 @@ $ grunt build
 ```Shell
 $ grunt dev
 ```
-#### Test
+#### Run TiShadow and test
 ```Shell
 $ grunt test
 ```
