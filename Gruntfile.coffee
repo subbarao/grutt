@@ -10,7 +10,7 @@ module.exports = (grunt) ->
     coffee:
       options:
         sourceMap: true
-      alloyctrls:
+      alloylib:
         files: [
           expand: true
           cwd: '<%= name %>/src/lib'
@@ -19,8 +19,8 @@ module.exports = (grunt) ->
           ext: '.js'
         ]
         options:
-          bare: true
-      alloylib:
+          bare: false
+      alloyctrls:
         files: [
           expand: true
           cwd: '<%= name %>/src/controllers'
@@ -29,7 +29,7 @@ module.exports = (grunt) ->
           ext: '.js'
         ]
         options:
-          bare: false
+          bare: true
       test:
         files: [
           expand: true
